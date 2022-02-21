@@ -1,6 +1,6 @@
 const { v4: uuid } = require('uuid')
 
-export class Course {
+class Course {
     constructor(lecturerName, courseTitle, courseCode, courseTime, courseDay, courseWeek) {
         this.key = uuid();
         this.lecturerName = lecturerName;
@@ -24,7 +24,7 @@ export class Course {
     }
 }
 
-export class Lecture {
+class Lecture {
     constructor(courseId, startTime, endTime, attendance, mediaURL) {
         this.key = uuid();
         this.courseId = courseId;
@@ -44,9 +44,14 @@ export class Lecture {
             courseId: this.courseId,
             startTime: this.startTime,
             endTime: this.endTime,
-            duration: getDuration(),
+            duration: this.getDuration(),
             attendance: this.attendace,
             mediaURL: this.mediaURL
         }
     }
+}
+
+module.exports = {
+    Course,
+    Lecture
 }
