@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -9,7 +9,7 @@
     <link type="text/css" rel="stylesheet" href="/assets/css/style.css">
     <link type="text/css" rel="stylesheet" href="/assets/fonts/poppins.css">
 </head>
-<title>Ongoing Lecture</title>
+<title>Ongoing Lecture - <%=courseTitle%></title>
 </head>
 <style>
     * {
@@ -42,7 +42,8 @@
     .record-panel {
         display: flex;
         flex: .2;
-        justify-content: space-around;
+        justify-content: space-between;
+        padding: 0 3%;
         width: 100%;
         align-items: center;
 
@@ -54,7 +55,7 @@
         color: #f2f2f2;
     }
 
-    .record-details span {
+    .record-details span, label {
         display: flex;
         color: #f2f2f2;
         align-items: center;
@@ -90,13 +91,16 @@
         </div>
         <div class="record-panel">
             <div class="record-details">
-                <h3>Dr Akinosho</h3>
+                <h3><%=lecturerName%></h3>
                 <span>
-                    <h5>Data Management -</h5>
-                    <h6>Monday, Week 5</h6>
+                    <h5><%=courseTitle%> - </h5>
+                    <h6><%=courseDay%></h6>
                 </span>
             </div>
-            <input type="number" name="" id="">
+            <label for="attendance"></label>
+            <input type="number" name="" id="attendance">
+            <label for="week"></label>
+            <input type="number" name="" id="week">
             <button type="button" id='stop-record'>Stop</button>
         </div>
     </div>
@@ -131,8 +135,8 @@
             videoRec.startRecording();
 
             document.querySelector('#stop-record').onclick = () => {
-                if (document.querySelector('input').value <= 0) {
-                    alert('Please specify a valid attendance value!');
+                if (document.querySelector('#attendance').value <= 0 && document.querySelector('#week').value <= 0) {
+                    alert('Please specify a valid attendance and week value!');
                     return;
                 }
 
@@ -146,7 +150,8 @@
 
                     const data = new FormData();
                     data.append('recording', file);
-                    data.append('attendance', document.querySelector('input').valueAsNumber);
+                    data.append('attendance', document.querySelector('#attendance').valueAsNumber);
+                    data.append('week', document.querySelector('#week').valueAsNumber);
                     data.append('startTime', startTime);
                     data.append('endTime', stopTime);
 

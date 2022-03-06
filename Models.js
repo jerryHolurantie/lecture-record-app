@@ -25,13 +25,14 @@ class Course {
 }
 
 class Lecture {
-    constructor(courseId, startTime, endTime, attendance, mediaURL) {
+    constructor(courseId, startTime, endTime, attendance, mediaURL, week) {
         this.key = uuid();
         this.courseId = courseId;
         this.startTime = startTime;
         this.endTime = endTime;
         this.attendace = attendance;
-        this.mediaURL = mediaURL
+        this.mediaURL = mediaURL;
+        this.week = week;
     }
 
     getDuration() {
@@ -46,7 +47,8 @@ class Lecture {
             endTime: this.endTime,
             duration: this.getDuration(),
             attendance: this.attendace,
-            mediaURL: this.mediaURL
+            mediaURL: this.mediaURL,
+            week: this.week
         }
     }
 }

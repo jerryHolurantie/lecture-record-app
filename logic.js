@@ -5,24 +5,42 @@ require('dotenv').config();
 const MEDIA_URL = process.env.MEDIA_URL; 
 
 async function fetchCourses() {
-    const courses = (await db.collection('courses').get()).data()
+    const courses = [];
+    const snapshot = await db.collection('Courses').get();
+
+    if (snapshot.docs.length <= 0) return [];
+    
+    snapshot.docs.map(doc => courses.push(doc.data()));
+
     return courses;
 }
 
-async function fetchLectures() {
-    const lectures = (await db.collection('lectures').get()).data()
+async function fetchLectures(id) {
+    const lectures = [];
+    const snapshot = await db.collection('Lectures').where('courseId', '==', id).get();
+
+    if (snapshot.docs.length <= 0) return [];
+
+    snapshot.docs.map(doc => lectures.push(doc.data()));
+
     return lectures;
+    
+}
+
+async function fetchCourse(id) {
+    const course = (await db.collection('Courses').doc(id).get()).data();
+
+    return course;
 }
 
 async function saveLecture(req, res) {
-    const { startTime, endTime, attendance } = req.body;
+    const { startTime, endTime, attendance, week } = req.body;
     const courseId = req.params.id;
     const mediaURL = `${MEDIA_URL}${courseId}.webm`;
 
-    const lecture = new Lecture(courseId, startTime, endTime, attendance, mediaURL);
-    console.log(lecture.get());
+    const lecture = new Lecture(courseId, startTime, endTime, attendance, mediaURL, week);
 
-    await db.collection('lectures').add({ ...lecture.get() });
+    await db.collection('Lectures').add({ ...lecture.get() });
     
     res.send('Upload successfull!').end()
 }
@@ -30,6 +48,7 @@ async function saveLecture(req, res) {
 
 module.exports = {
     fetchCourses,
+    fetchCourse,
     fetchLectures,
     saveLecture
 }

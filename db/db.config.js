@@ -1,10 +1,10 @@
-// Import the functions you need from the SDKs you need
-const { initializeApp } = require("firebase/app");
-const { getFirestore } = require("firebase/firestore")
-const { firebaseConfig } = require('./db.secret');
+const admin = require("firebase-admin");
+require('dotenv').config()
 
-const app = initializeApp({ ...firebaseConfig });
+admin.initializeApp({ 
+    credential: admin.credential.cert(process.env.SERVICE_ACCOUNT)
+ });
 
-const db = getFirestore(app);
+const db = admin.firestore();
 
 module.exports = { db };
