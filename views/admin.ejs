@@ -11,14 +11,23 @@
   <title>Admin | Lecture Record Application</title>
 </head>
 <body>
-    <div>
-      <h6>Admin</h6>
-    </div>
     <div id="credits" class="container mt-4 pt-2 mb-5">
+      <div>
+        <h1 style="color: white;">Admin</h1>
+        <h3 class="header" style="color: white;">
+          <% if (semester == 1) { %>
+            First Semester
+          <% } %>
+
+          <% if (semester == 2) { %>
+            Second Semester
+          <% } %>
+        </h3>
+      </div>
         <!-- monday -->
         <div class="row">
             <h3 class="text-center my-3 pb-2">Monday</h3>
-            
+
             <% courses.filter(course => course.courseDay === 'Monday').map(course => { %>
             <div class="col-md-4 mb-4">
                 <div class="card bg-2 b-none shadow-lg">
@@ -37,7 +46,7 @@
         <!-- Tuesday -->
             <div class="row">
             <h3 class="text-center my-3 pb-2">Tuesday</h3>
-          
+
               <% courses.filter(course => course.courseDay === 'Tuesday').map(course => { %>
             <div class="col-md-4 mb-4">
                 <div class="card bg-2 b-none shadow-lg">
@@ -52,7 +61,7 @@
                 </div>
             </div>
             <% }) %>
-           
+
          </div>
         <!-- wednesday -->
          <div class="row">
@@ -91,7 +100,7 @@
             <% }) %>
             </div>
         <!-- friday -->
-            
+
         <div class="row">
             <h3 class="text-center my-3 pb-2">Friday</h3>
               <% courses.filter(course => course.courseDay === 'Friday').map(course => { %>
@@ -112,6 +121,3 @@
      </div>
 </body>
 </html>
-
-            
-            
