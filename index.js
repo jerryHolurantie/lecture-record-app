@@ -12,7 +12,8 @@ app.use(express.static(__dirname + '/public'))
 app.set('view engine', 'ejs')
 app.set('views', './views')
 
-const PORT = process.env.PORT || 5500
+const PORT = process.env.PORT || 5500;
+const URL = process.env.URL;
 
 app.get('/', (_, res) => {
   res.redirect('/1');
@@ -20,17 +21,17 @@ app.get('/', (_, res) => {
 
 app.get('/1', async (_, res) => {
   const courses = (await fetchCourses()).filter(course => course.semester === 'First Semester');
-  res.render('index', { courses, semester: 1 });
+  res.render('index', { courses, semester: 1, URL });
 })
 
 app.get('/2', async (_, res) => {
   const courses = (await fetchCourses()).filter(course => course.semester === 'Second Semester');
-  res.render('index', { courses, semester: 2 })
+  res.render('index', { courses, semester: 2, URL })
 })
 
 app.get('/record/:id', async (req, res) => {
   const course = await fetchCourse(req.params.id);
-  res.render('record', { ...course });
+  res.render('record', { ...course, URL });
 })
 
 app.get('/admin', (_, res) => {
@@ -39,19 +40,19 @@ app.get('/admin', (_, res) => {
 
 app.get('/admin/1', async (_, res) => {
   const courses = (await fetchCourses()).filter(course => course.semester === 'First Semester');
-  res.render('admin', { courses, semester: 1 });
+  res.render('admin', { courses, semester: 1, URL });
 })
 
 app.get('/admin/2', async (_, res) => {
   const courses = (await fetchCourses()).filter(course => course.semester === 'Second Semester');
-  res.render('admin', { courses, semester: 2 });
+  res.render('admin', { courses, semester: 2, URL });
 })
 
 app.get('/view/:id', async (req, res) => {
   const course = await fetchCourse(req.params.id.trim());
   const lectures = await fetchLectures(req.params.id);
 
-  res.render('view', { ...course, lectures: JSON.stringify(lectures) })
+  res.render('view', { ...course, lectures: JSON.stringify(lectures), URL })
 })
 
 app.post('/update-recording/:id', upload.single('recording'), (req, res) => {
