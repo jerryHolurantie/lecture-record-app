@@ -136,7 +136,7 @@
            if (!lectures || lectures.length <= 0) {
                alert("No Lectures Available for this course yet!"); window.history.back();
            } else {
-               update(lectures[0]);
+               update(lectures.find(lec => lec.week === '1'));
            }
        }
 

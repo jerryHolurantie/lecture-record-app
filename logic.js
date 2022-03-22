@@ -36,7 +36,7 @@ async function fetchCourse(id) {
 async function saveLecture(req, res) {
     const { startTime, endTime, attendance, week } = req.body;
     const courseId = req.params.id;
-    const mediaURL = `${MEDIA_URL}${courseId}.webm`;
+    const mediaURL = `${MEDIA_URL}${endTime}.webm`;
 
     const lecture = new Lecture(courseId, startTime, endTime, attendance, mediaURL, week);
 
